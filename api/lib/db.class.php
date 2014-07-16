@@ -115,7 +115,7 @@ class db extends PDO{
     /**
      * 删除数据
      */
-    public function delete($sql){
+    public function _delete($sql){
         return $this->run($sql);
     }
     
@@ -123,7 +123,7 @@ class db extends PDO{
      * 更新数据
      */
     public function update($sql){
-        return self::run($sql);
+        return $this->run($sql);
     }
     
     /**
@@ -131,7 +131,7 @@ class db extends PDO{
      */
     public function num($table,$where = '1=1'){
         $sql = "SELECT count(*) as n FROM `$table` WHERE $where";
-        $d = self::getone($sql);
+        $d = $this->getone($sql);
         return $d['n'];
     }
 

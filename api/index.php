@@ -11,7 +11,7 @@ $conn = new model();
 function getlist($page, $table){
     global $conn;
     $page = isset($page) ? intval($page) : 1;    
-    echo $conn->get($table,$page);
+    echo $conn->entry($table,$page); //列表专用
 }
 
 // 客户列表
@@ -19,7 +19,13 @@ $app->get('/client/:page',function($page){
     getlist($page,'tech_info');
 });
 
-$app->post('/client/:id',function($id){ });
+
+$app->post('/client/',function(){
+    
+    var_dump($_POST);
+
+});
+
 $app->put('/client/:id',function($id){ });
 $app->delete('/client/:id',function($id){ });
 
