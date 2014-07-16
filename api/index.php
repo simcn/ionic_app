@@ -1,52 +1,43 @@
 <?php
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: *");
-
+require 'config.inc.php';
 require 'Slim/Slim.php';
+
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
+$conn = new model();
 
-function toJson($data){
-    return json_encode($data);
+
+function getlist($page, $table){
+    global $conn;
+    $page = isset($page) ? intval($page) : 1;    
+    echo $conn->get($table,$page);
 }
 
 // 客户列表
-$app->get('/client',function(){ 
-    $data = array(
-        'name'=>'one',
-        'phone'=>'123456709'
-    );
-    echo toJson($data);
+$app->get('/client/:page',function($page){
+    getlist($page,'tech_info');
 });
+
 $app->post('/client/:id',function($id){ });
 $app->put('/client/:id',function($id){ });
 $app->delete('/client/:id',function($id){ });
 
 // 业务列表
-$app->get('/operation',function(){ 
-    $data = array(
-        'name'=>'one',
-        'phone'=>'123456709'
-    );
-    echo toJson($data);
-});
+$app->get('/operation',function(){  });
 $app->post('/operation/:id',function($id){ });
 $app->put('/operation/:id',function($id){ });
 $app->delete('/operation/:id',function($id){ });
 
 // 帐号列表
-$app->get('/account',function(){
-    $data = array(
-        'name'=>'one',
-        'phone'=>'123456709'
-    );
-    echo toJson($data);
+$app->get('/account/:page',function($page){
+    getlist($page,'tags');
 });
+
 $app->post('/account/:id',function($id){
 	echo $id;
 });
+
 $app->put('/account/:id',function($id){ });
 $app->delete('/account/:id',function($id){ });
 

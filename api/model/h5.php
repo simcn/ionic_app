@@ -1,25 +1,34 @@
 <?php
 
-class model extends iBase{
+class model extends db{
+
+    public function __construct(){
+        global $dbConfig;
+        if(is_array($dbConfig)){
+            parent::__construct($dbConfig);
+        }else{
+            die('$dbConfig 未定义');
+        }
+    }    
 	
-	function get($table,$page, $size = 5){
-        $sql = "SELECT * FROM $table LIMIT $page, $size" ; //pageNum 从0开始
-        echo $sql;
-        //return $this->_toJson(  $this->_all($sql) );		
+	public function get($table, $page, $size = 5){
+        $sql = "SELECT * FROM $table WHERE 1=1" ;
+        $start = ($page - 1) * $size; //初始位置
+        return $this->tojson(  $this->selectlimit($sql, $start, $size) );		
 	}
 	
-    function put($table,$id){
-
+    public function put($table,$id){
+        return '';
     }
 
-    function post($table,$id){
-
+    public function post($table,$id){
+        return '';
     }
 
-    function delete($table,$id){
-
+    public function dele($table,$id){
+        return '';
     }
-
+    
 }
 
 ?>
